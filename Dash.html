@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLS Player</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .video-container {
+            max-width: 900px;
+            width: 100%;
+            background-color: #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        video {
+            width: 100%;
+            height: auto;
+            display: block; /* Removes extra space below video */
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="my-video" controls autoplay></video>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('my-video');
+            // The URL you provided
+            var videoSrc = "http://live-ssai-bpk-mum.cdn.hotstar.com/hls/live/2024729/inallow-ipl-2025/hin/1540040396/15mindvrm0132b26404f789491aae7ae4134d8c9dab03june2025/master_apm_720_5.m3u8?|cookie=hdntl=exp=1749035424~acl=/hls/live/2024729/inallow-ipl-2025/hin/1540040396/15mindvrm0132b26404f789491aae7ae4134d8c9dab03june2025/master_apm~ttl=86400~type=free~data=ip=nWLZmByqmNHZ0hOuIqAdcDl8cMnNo2DCUVuWOVzcxkzJ-userid=SUwSnZcRAS3KncQvX1F8QqpNtvzrhbCz0MH7epC1f0Ni-did=U9OHsEWSa21zL8pWKB2IcdnIsN0e6mKvndXsJMuzod67-cc=in-de=1-pl=android-ap=25.01.27.1.2915-ut=guest-~hmac=90c0f60880ca87d2d88cbbec57f76f2063cdd15954823f3400ae3636518adf0f";
+
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(videoSrc);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play();
+                });
+                hls.on(Hls.Events.ERROR, function(event, data) {
+                    if (data.fatal) {
+                        switch(data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR:
+                                console.error("fatal network error encountered, try to recover", data);
+                                hls.recoverMediaError();
+                                break;
+                            case Hls.ErrorTypes.MEDIA_ERROR:
+                                console.error("fatal media error encountered, try to recover", data);
+                                hls.recoverMediaError();
+                                break;
+                            default:
+                                // cannot recover
+                                hls.destroy();
+                                break;
+                        }
+                    }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Native HLS support (e.g., Safari)
+                video.src = videoSrc;
+                video.addEventListener('loadedmetadata', function() {
+                    video.play();
+                });
+            } else {
+                alert('Your browser does not support HLS playback directly or via HLS.js.');
+            }
+        });
+    </script>
+</body>
+</html>
