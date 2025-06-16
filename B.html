@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoder</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Apply Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for textareas */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #e2e8f0; /* bg-gray-200 */
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #9ca3af; /* bg-gray-400 */
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* bg-gray-500 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-700 via-purple-800 to-pink-900 min-h-screen flex items-center justify-center p-4 antialiased">
+
+    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-3xl w-full max-w-5xl transform transition-all duration-500 hover:scale-[1.01] hover:shadow-4xl motion-reduce:hover:scale-100 motion-reduce:transform-none">
+        <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-10 tracking-tight leading-tight">
+            Seamless Base64 Decoder
+        </h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+            <!-- Input Section -->
+            <div>
+                <label for="base64Input" class="block text-2xl font-semibold text-gray-700 mb-3 select-none">
+                    Base64 Input:
+                </label>
+                <textarea
+                    id="base64Input"
+                    rows="12"
+                    placeholder="Paste Base64 here..."
+                    class="w-full p-5 border-3 border-gray-300 rounded-xl focus:ring-5 focus:ring-blue-400 focus:border-blue-500 transition-all duration-300 ease-in-out text-lg text-gray-800 resize-y outline-none shadow-md hover:shadow-lg focus:shadow-xl placeholder-gray-400"
+                    spellcheck="false"
+                ></textarea>
+            </div>
+
+            <!-- Output Section -->
+            <div>
+                <label for="decodedOutput" class="block text-2xl font-semibold text-gray-700 mb-3 select-none">
+                    Decoded Output:
+                </label>
+                <textarea
+                    id="decodedOutput"
+                    rows="12"
+                    placeholder="Decoded text appears here..."
+                    readonly
+                    class="w-full p-5 border-3 border-gray-300 rounded-xl bg-gray-50 text-gray-800 focus:ring-5 focus:ring-green-400 focus:border-green-500 transition-all duration-300 ease-in-out text-lg resize-y outline-none shadow-md hover:shadow-lg focus:shadow-xl cursor-not-allowed placeholder-gray-400"
+                ></textarea>
+            </div>
+        </div>
+
+        <!-- Optional subtle branding/info -->
+        <div class="mt-12 text-center text-gray-600 text-sm">
+            <p>Your instant decoding tool.</p>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the input and output text areas
+        const base64Input = document.getElementById('base64Input');
+        const decodedOutput = document.getElementById('decodedOutput');
+
+        // Function to perform Base64 decoding
+        function decodeBase64() {
+            const encodedString = base64Input.value;
+            try {
+                // Use the built-in atob() function for Base64 decoding
+                // If the input is not valid Base64, atob() will throw an error.
+                const decodedString = atob(encodedString);
+                decodedOutput.value = decodedString;
+
+                // Remove any previous error styling
+                decodedOutput.classList.remove('border-red-500', 'ring-red-300');
+                decodedOutput.classList.add('border-gray-300', 'focus:ring-green-400', 'focus:border-green-500');
+
+            } catch (error) {
+                // If decoding fails (invalid Base64), clear the output
+                // This keeps the interface "plain" without explicit error messages.
+                decodedOutput.value = '';
+
+                // Add temporary error styling (border flash)
+                decodedOutput.classList.add('border-red-500', 'ring-red-300');
+                decodedOutput.classList.remove('border-gray-300', 'focus:ring-green-400', 'focus:border-green-500');
+
+                // You could add a short, temporary visual feedback here,
+                // like a subtle shake animation or a quick border color change
+                // that reverts after a short delay, but for "plain," clearing is best.
+                // Example of a temporary border flash (uncomment to try):
+                // setTimeout(() => {
+                //     decodedOutput.classList.remove('border-red-500', 'ring-red-300');
+                //     decodedOutput.classList.add('border-gray-300', 'focus:ring-green-400', 'focus:border-green-500');
+                // }, 500);
+            }
+        }
+
+        // Add an event listener to the input textarea
+        // 'input' event fires whenever the value of the <textarea> changes
+        base64Input.addEventListener('input', decodeBase64);
+
+        // Initial decode call in case of browser autofill or pre-loaded content
+        decodeBase64();
+    </script>
+</body>
+</html>
