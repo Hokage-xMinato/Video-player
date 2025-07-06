@@ -909,8 +909,30 @@
     <video id="player" controls="" class="w-screen max-h-screen plyr--video z-10"></video>
 </div>
    <script aria-hidden="true">
-        
+        document.addEventListener('DOMContentLoaded', () => {
+    // START: Modified Domain Check
+    const allowedDomains = [
+        atob('c3R1ZHlzbWFydGVycGxheWVyLm5ldGxpZnkuYXBw'), // Decodes to "studysmarterplayer.netlify.app"
+        atob('c3R1ZHlzbWFydGVyeC5uZXRsaWZ5LmFwcA==') // Decodes to "studysmarterx.netlify.app"
+    ];
+    const currentHostname = window.location.hostname;
 
+    // If the current hostname is NOT in our allowed list AND is NOT 'localhost'
+    if (!allowedDomains.includes(currentHostname) && currentHostname !== 'localhost') {
+        window.location.replace('denied.html'); // Redirect to denied.html
+        return; // Stop further script execution if not allowed
+    }
+    // END: Modified Domain Check
+
+    document.addEventListener("keydown", function(event) {
+        if (event.keyCode == 123) event.preventDefault();
+    });
+
+    document.addEventListener("contextmenu", function(event) {
+        event.preventDefault();
+    });
+
+    
 
             const video = document.getElementById('player');
             const urlParams = new URLSearchParams(window.location.search);
