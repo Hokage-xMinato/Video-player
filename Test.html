@@ -910,29 +910,6 @@
 </div>
    <script aria-hidden="true">
         
-document.addEventListener('DOMContentLoaded', () => {
-    const allowedDomains = [
-        atob('c3R1ZHlzbWFydGVycGxheWVyLm5ldGxpZnkuYXBw'), // studysmarterplayer.netlify.app
-        atob('c3R1ZHlzbWFydGVyeC5uZXRsaWZ5LmFwcA==') // studysmarterx.netlify.app
-    ];
-    const currentHostname = window.location.hostname;
-
-    // Check if the current hostname is NOT in our allowed list AND is NOT 'localhost'
-    if (!allowedDomains.includes(currentHostname) && currentHostname !== 'localhost') {
-        // Redirect to denied.html
-        window.location.replace('denied.html'); // Using replace to prevent going back to the restricted page
-        return; // Stop further script execution
-    }
-
-    // Developer Tools and Context Menu Disabling
-    document.addEventListener("keydown", function(event) {
-        if (event.keyCode == 123) event.preventDefault(); // Disable F12
-    });
-
-    document.addEventListener("contextmenu", function(event) {
-        event.preventDefault(); // Disable right-click context menu
-    });
-});
 
 
             const video = document.getElementById('player');
