@@ -492,7 +492,7 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1" aria-hidden="true"></script>
     <link rel="stylesheet" href="https://static.pw.live/fonts/reddit/font.css" aria-hidden="true">
     <script disable-devtool-auto="" src="https://cdn.jsdelivr.net/npm/disable-devtool" aria-hidden="true"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" aria-hidden="true">
     <style aria-hidden="true">
         
         * {
@@ -896,7 +896,6 @@
 
           }
           </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" aria-hidden="true">
     <style aria-hidden="true">
         body {
             font-family: 'Poppins', sans-serif;
@@ -1235,6 +1234,77 @@
         }
     </style>
 
+    <style>
+  /* Basic Popup Styles */
+  #p0p_up_1701 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stays in place even when scrolling */
+    z-index: 1000; /* On top of everything */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black background with opacity */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+
+  /* Popup Content Styles */
+  #p0p_c0nt_2302 {
+    background-color: #ffffff; /* White background */
+    margin: auto; /* Auto margin for centering */
+    padding: 40px;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Soft shadow */
+    position: relative; /* For positioning the close button */
+    max-width: 1000px; /* Max width for content */
+    text-align: center;
+    font-family: 'Arial', sans-serif; /* Modern font */
+    color: #333;
+    animation: fadeIn 0.5s ease-out; /* Fade-in animation */
+  }
+
+  /* Close Button Styles */
+  #cl0s3_bt_3903 {
+    color: #aaaaaa;
+    font-size: 36px;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out; /* Smooth hover effect */
+  }
+
+  #cl0s3_bt_3903:hover,
+  #cl0s3_bt_3903:focus {
+    color: #666666;
+    text-decoration: none;
+    outline: none;
+  }
+
+  /* Text Message Styles */
+  #t3xt_m3ss4g3_4504 {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 0;
+    padding-top: 10px; /* Space between close button and text */
+  }
+
+  /* Fade-in Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
 
     <div id="plyr-video" aria-hidden="true">
         <!-- Logo element -->
@@ -1265,9 +1335,16 @@
         <video id="player" controls="" class="w-screen max-h-screen plyr--video z-10"></video>
     </div>
 
+    <div id="p0p_up_1701">
+  <div id="p0p_c0nt_2302">
+    <span id="cl0s3_bt_3903">&times;</span>
+    <p id="t3xt_m3ss4g3_4504" >This website is owned by <a href="https://t.me/studysmarterhub/90"><b><u>Study Smarter</u></b></a>, and our main website is <a href="https://studysmarterx.netlify.app"><b><u>Website</u></b></a>.<br> If you have came from any other channel, that's not listed on our website or telegram channel then, please go to our channels as the lectures are provided firstly their, then these people copy it.<i> Hope you understand and want faster videos.</i>  <br> Subscribe to our telegram channel now for fastest updates.<br> <b>Also if you have came from anywhere else, you can contact us at <a href="https://t.me/contactxme_bot"><u>Contact</u></a></b> </p>
+  </div>
+</div>
+
     <script aria-hidden="true">
         document.addEventListener('DOMContentLoaded', () => {
-            const encodedDomain = atob('c3R1ZHlzbWFydGVycGxheWVyLm5ldGxpZnkuYXBw');
+            const encodedDomain = atob('c3R1ZHlzbWFydGVyeC5uZXRsaWZ5LmFwcA==');
 
             if (window.location.hostname !== encodedDomain) {
                 document.body.innerHTML = "<h1 style='text-align:center;color:red;font-size:3rem;'>no no Denied</h1>";
@@ -1673,7 +1750,39 @@
     </script>
 
 
+<script>
+  // Get the popup element
+  const p0p_up_1701 = document.getElementById('p0p_up_1701');
 
+  // Get the close button element
+  const cl0s3_bt_3903 = document.getElementById('cl0s3_bt_3903');
+
+  // Function to show the popup
+  function sh0w_p0p_up_5105() {
+    p0p_up_1701.style.display = 'flex'; // Change to flex to make it visible and centered
+  }
+
+  // Function to hide the popup
+  function h1d3_p0p_up_6206() {
+    p0p_up_1701.style.display = 'none';
+  }
+
+  // Show the popup when the page loads
+  window.addEventListener('load', sh0w_p0p_up_5105);
+
+  // When the user clicks on the close button, hide the popup
+  cl0s3_bt_3903.addEventListener('click', h1d3_p0p_up_6206);
+
+  // Optional: Hide the popup if the user clicks anywhere outside of the content
+  window.addEventListener('click', function(event) {
+    if (event.target === p0p_up_1701) {
+      h1d3_p0p_up_6206();
+    }
+  });
+
+  // Example of how to change the text dynamically (optional)
+  // document.getElementById('t3xt_m3ss4g3_4504').textContent = "Special offer for new visitors!";
+</script>
  
 
 
