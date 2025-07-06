@@ -2495,6 +2495,129 @@ document.addEventListener('DOMContentLoaded', () => {
   // Example of how to change the text dynamically (optional)
   // document.getElementById('t3xt_m3ss4g3_4504').textContent = "Special offer for new visitors!";
 </script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const downloadButton = document.getElementById('download-button');
+    const urlParams = new URLSearchParams(window.location.search);
+    const lessonUrl = urlParams.get('url');
+
+    if (downloadButton && lessonUrl) {
+        downloadButton.addEventListener('click', () => {
+            const encodedLessonUrl = encodeURIComponent(lessonUrl);
+            // Intent URL for 1DM (Android-specific)
+            const oneDMDownloadUrl = `intent:${encodedLessonUrl}#Intent;package=com.dv.dm;S.Browser_Fallback_Url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.dv.dm;end;`;
+
+            window.location.href = oneDMDownloadUrl;
+
+            // Optional: Provide user feedback with SweetAlert2
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Attempting Download',
+                    text: 'If 1DM is installed, the download will start. Otherwise, you\'ll be redirected to the Play Store.',
+                    icon: 'info',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            } else {
+                console.log('Attempting to open 1DM for download...');
+            }
+        });
+    } else {
+        // Optional: Hide the button if no URL or button not found
+        if (downloadButton) {
+            downloadButton.style.display = 'none';
+        }
+        console.warn('Download button or video URL not found, download functionality disabled.');
+    }
+});
+    </script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const miniPlayerButton = document.getElementById('mini-player-button');
+    const playerElement = document.getElementById('player'); // Assuming your video element has id="player"
+
+    // Check if Picture-in-Picture is supported by the browser
+    if ('pictureInPictureEnabled' in document && playerElement && miniPlayerButton) {
+        miniPlayerButton.style.display = 'flex'; // Show button if PIP is supported
+
+        miniPlayerButton.addEventListener('click', async () => {
+            if (document.pictureInPictureElement) {
+                // If already in PiP, exit PiP
+                try {
+                    await document.exitPictureInPicture();
+                    console.log('Exited Picture-in-Picture mode');
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Exited Mini Player',
+                            icon: 'info',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error exiting Picture-in-Picture:', error);
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Error Exiting Mini Player',
+                            text: error.message,
+                            icon: 'error',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                }
+            } else {
+                // If not in PiP, request PiP
+                try {
+                    await playerElement.requestPictureInPicture();
+                    console.log('Entered Picture-in-Picture mode');
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Mini Player Active',
+                            text: 'Video is now in Picture-in-Picture mode.',
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error entering Picture-in-Picture:', error);
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Error Entering Mini Player',
+                            text: 'Failed to enter Picture-in-Picture. ' + error.message,
+                            icon: 'error',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                }
+            }
+        });
+
+        // Optional: Add event listeners to change button icon based on PiP state
+        playerElement.addEventListener('enterpictureinpicture', () => {
+            if (miniPlayerButton.querySelector('i')) {
+                miniPlayerButton.querySelector('i').className = 'fas fa-clone'; // Icon for active PiP
+            }
+        });
+
+        playerElement.addEventListener('leavepictureinpicture', () => {
+            if (miniPlayerButton.querySelector('i')) {
+                miniPlayerButton.querySelector('i').className = 'fas fa-compact-disc'; // Original icon
+            }
+        });
+
+    } else {
+        // Hide the button if PiP is not supported or elements are missing
+        if (miniPlayerButton) {
+            miniPlayerButton.style.display = 'none';
+        }
+        console.warn('Picture-in-Picture is not supported by this browser or required elements are missing.');
+    }
+});
+    </script>
  
 
 
