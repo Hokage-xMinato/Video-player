@@ -1369,7 +1369,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadButton.addEventListener('click', () => {
             const encodedLessonUrl = encodeURIComponent(lessonUrl);
             // Intent URL for 1DM (Android-specific)
-            const oneDMDownloadUrl = `intent:${encodedLessonUrl}#Intent;package=com.dv.dm;S.Browser_Fallback_Url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.dv.dm;end;`;
+            const oneDMDownloadUrl = `intent:${encodedLessonUrl}#Intent;package=com.dv.dm;S.Browser_Fallback_Url=https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://play.google.com/store/apps/details%3Fid%3Didm.internet.download.manager%26hl%3Den%26referrer%3Dutm_source%253Dgoogle%2526utm_medium%253Dorganic%2526utm_term%253Dplaystore%2B1dm%26pcampaignid%3DAPPU_1_1MRraKXUNuOVseMPrNf0oQQ&ved=2ahUKEwiljqbh5qqOAxXjSmwGHawrPUQQ8oQBegQIExAB&usg=AOvVaw2kMjp7ygJDmvELhB5hYoIz;end;`;
 
             window.location.href = oneDMDownloadUrl;
 
