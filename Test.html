@@ -1395,41 +1395,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>-->
-    <script>
+   <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const downloadButton = document.getElementById('download-button');
+    const button = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
     const lessonUrl = urlParams.get('url');
 
-    if (downloadButton && lessonUrl) {
-        downloadButton.addEventListener('click', () => {
+    if (button && lessonUrl) {
+        button.addEventListener('click', () => {
             const oneDmUrl = `1dm://download?url=${encodeURIComponent(lessonUrl)}`;
 
-            // Try to open 1DM
+            // Open 1DM
             window.location.href = oneDmUrl;
 
-            // Fallback: Open Play Store after 2s if 1DM is not installed
+            // Fallback to correct Play Store link
             setTimeout(() => {
-                window.location.href = 'https://play.google.com/store/apps/details?id=idm.internet.download.manager';
+                window.location.href = "https://play.google.com/store/apps/details?id=idm.internet.download.manager";
             }, 2000);
-
-            // Optional SweetAlert2 notification
-            if (typeof Swal !== 'undefined') {
-                Swal.fire({
-                    title: 'Opening 1DM...',
-                    text: 'If 1DM is not installed, you’ll be redirected to the Play Store.',
-                    icon: 'info',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-            }
         });
     } else {
-        if (downloadButton) downloadButton.style.display = 'none';
-        console.warn('Download button or URL parameter is missing.');
+        if (button) button.style.display = 'none';
+        console.warn('Download button or URL param missing');
     }
 });
 </script>
+
 
     <script>
 document.addEventListener('DOMContentLoaded', () => {
