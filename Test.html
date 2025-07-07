@@ -1395,7 +1395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>-->
-  <script>
+    <script>
 document.addEventListener('DOMContentLoaded', () => {
     const downloadButton = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
@@ -1403,21 +1403,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (downloadButton && lessonUrl) {
         downloadButton.addEventListener('click', () => {
-            // Build 1DM intent URL
-            const oneDmIntent = `intent://download?url=${encodeURIComponent(lessonUrl)}#Intent;scheme=1dm;package=com.dv.dm;end`;
+            const oneDmUrl = `1dm://download?url=${encodeURIComponent(lessonUrl)}`;
 
-            // Try to open 1DM, fallback to Play Store after delay
-            const fallback = setTimeout(() => {
-                window.location.href = "https://play.google.com/store/apps/details?id=com.dv.dm";
-            }, 2000); // wait for 2 seconds
+            // Try to open 1DM
+            window.location.href = oneDmUrl;
 
-            window.location.href = oneDmIntent;
+            // Fallback: Open Play Store after 2s if 1DM is not installed
+            setTimeout(() => {
+                window.location.href = 'https://play.google.com/store/apps/details?id=idm.internet.download.manager';
+            }, 2000);
 
-            // Optional feedback if SweetAlert2 is loaded
+            // Optional SweetAlert2 notification
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: 'Opening 1DM...',
-                    text: 'If not installed, you’ll be redirected to the Play Store.',
+                    text: 'If 1DM is not installed, you’ll be redirected to the Play Store.',
                     icon: 'info',
                     timer: 3000,
                     showConfirmButton: false
@@ -1426,13 +1426,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         if (downloadButton) downloadButton.style.display = 'none';
-        console.warn('Download button or ?url parameter is missing.');
+        console.warn('Download button or URL parameter is missing.');
     }
 });
 </script>
 
-
-    
     <script>
 document.addEventListener('DOMContentLoaded', () => {
     const miniPlayerButton = document.getElementById('mini-player-button');
