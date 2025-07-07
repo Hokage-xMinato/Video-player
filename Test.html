@@ -1481,37 +1481,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>
- <script>
-  (function () {
-    // Base64 encoded allowed domains
-    const encodedAllowed = [
-      "aHR0cHM6Ly9zdHVkeXNtYXJ0ZXJ4Lm5ldGxpZnkuYXBw",       // https://studysmarterx.netlify.app
-      "aHR0cHM6Ly9zdHVkeXNtYXJ0ZXJwbGF5ZXIubmV0bGlmeS5hcHA=" // https://studysmarterplayer.netlify.app
-    ];
-
-    // Decode Base64 helper
-    function decodeBase64(str) {
-      try {
-        return atob(str);
-      } catch {
-        return '';
-      }
-    }
-
-    const allowedParents = encodedAllowed.map(decodeBase64);
-
-    if (window.top !== window.self) {
-      const ref = document.referrer;
-
-      if (!allowedParents.some(domain => ref.startsWith(domain))) {
-        document.body.innerHTML = '';
-        document.write('<h1>Embedding not allowed</h1>');
-        console.warn('Blocked iframe from:', ref);
-      }
-    }
-  })();
-</script>
-
+ 
 
 
 </body></html>
