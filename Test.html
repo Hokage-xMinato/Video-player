@@ -1322,7 +1322,7 @@
     Swal.fire('Error', 'Invalid video URL.', 'error');
     }
         });
-    </script>-->
+    </script>
 
 
 <script>
@@ -1359,43 +1359,8 @@
   // document.getElementById('t3xt_m3ss4g3_4504').textContent = "Special offer for new visitors!";
 </script>
 
-   <!-- <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const downloadButton = document.getElementById('download-button');
-    const urlParams = new URLSearchParams(window.location.search);
-    const lessonUrl = urlParams.get('url');
-
-    if (downloadButton && lessonUrl) {
-        downloadButton.addEventListener('click', () => {
-            const encodedLessonUrl = encodeURIComponent(lessonUrl);
-            // Intent URL for 1DM (Android-specific)
-            const oneDMDownloadUrl = `intent:${encodedLessonUrl}#Intent;package=com.dv.dm;S.Browser_Fallback_Url=https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://play.google.com/store/apps/details%3Fid%3Didm.internet.download.manager%26hl%3Den%26referrer%3Dutm_source%253Dgoogle%2526utm_medium%253Dorganic%2526utm_term%253Dplaystore%2B1dm%26pcampaignid%3DAPPU_1_1MRraKXUNuOVseMPrNf0oQQ&ved=2ahUKEwiljqbh5qqOAxXjSmwGHawrPUQQ8oQBegQIExAB&usg=AOvVaw2kMjp7ygJDmvELhB5hYoIz;end;`;
-
-            window.location.href = oneDMDownloadUrl;
-
-            // Optional: Provide user feedback with SweetAlert2
-            if (typeof Swal !== 'undefined') {
-                Swal.fire({
-                    title: 'Attempting Download',
-                    text: 'If 1DM is installed, the download will start. Otherwise, you\'ll be redirected to the Play Store.',
-                    icon: 'info',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-            } else {
-                console.log('Attempting to open 1DM for download...');
-            }
-        });
-    } else {
-        // Optional: Hide the button if no URL or button not found
-        if (downloadButton) {
-            downloadButton.style.display = 'none';
-        }
-        console.warn('Download button or video URL not found, download functionality disabled.');
-    }
-});
-    </script>-->
-<script>
+   
+<!--<script>
 document.addEventListener('DOMContentLoaded', () => {
     const downloadButton = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
@@ -1428,7 +1393,74 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("Download button or ?url= param missing.");
     }
 });
+</script>-->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const downloadButton = document.getElementById('download-button');
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawUrl = urlParams.get('url');
+    let quality = urlParams.get('q'); // may be null
+
+    function trigger1DMDownload(finalUrl, selectedQuality) {
+        const intent = `intent:${finalUrl}#Intent;package=idm.internet.download.manager;S.title=StudySmarter_Video_${selectedQuality}p;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
+        window.location.href = intent;
+
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: 'Starting Download',
+                text: `Opening ${selectedQuality}p video in 1DM...`,
+                icon: 'info',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }
+    }
+
+    if (downloadButton && rawUrl) {
+        downloadButton.addEventListener('click', () => {
+            let finalUrl = decodeURIComponent(rawUrl.split('|')[0]);
+
+            if (!quality) {
+                // Show quality selection popup
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Select Video Quality',
+                        text: 'Choose a quality to download:',
+                        icon: 'question',
+                        showCancelButton: true,
+                        showDenyButton: true,
+                        confirmButtonText: '720p',
+                        denyButtonText: '360p',
+                        cancelButtonText: '240p'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            trigger1DMDownload(finalUrl, '720');
+                        } else if (result.isDenied) {
+                            trigger1DMDownload(finalUrl, '360');
+                        } else {
+                            trigger1DMDownload(finalUrl, '240');
+                        }
+                    });
+                } else {
+                    // Fallback if SweetAlert2 is not available
+                    const selected = prompt("Enter quality (240, 360, 720):", "360");
+                    if (selected === "240" || selected === "360" || selected === "720") {
+                        trigger1DMDownload(finalUrl, selected);
+                    } else {
+                        alert("Invalid quality selected.");
+                    }
+                }
+            } else {
+                trigger1DMDownload(finalUrl, quality);
+            }
+        });
+    } else {
+        if (downloadButton) downloadButton.style.display = 'none';
+        console.warn("Download button or ?url= missing.");
+    }
+});
 </script>
+
 
     <script>
 document.addEventListener('DOMContentLoaded', () => {
