@@ -1395,25 +1395,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>-->
- <script>
+
+<script>
 document.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
-    const lessonUrl = urlParams.get('url');
+    const lessonUrl = urlParams.get('url'); // Get video URL from ?url= param
+    const quality = urlParams.get('q') || "720"; // Optional quality value
 
     if (button && lessonUrl) {
         button.addEventListener('click', () => {
-            // Correct intent URI with fallback
-            const intentUrl = `intent:${lessonUrl}#Intent;scheme=https;package=idm.internet.download.manager;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
+            const intentUrl = `intent:${lessonUrl}#Intent;package=idm.internet.download.manager;S.title=StudySmarter_Video_${quality}p;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
 
-            // Launch 1DM or fallback to Play Store
+            // Trigger 1DM intent
             window.location.href = intentUrl;
 
-            // Optional user feedback (SweetAlert2)
+            // Optional feedback (SweetAlert2)
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
-                    title: 'Launching 1DM',
-                    text: 'If 1DM is not installed, Play Store will open.',
+                    title: 'Starting Download',
+                    text: 'Opening in 1DM. If not installed, Play Store will open.',
                     icon: 'info',
                     timer: 3000,
                     showConfirmButton: false
@@ -1422,11 +1423,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         if (button) button.style.display = 'none';
-        console.warn('Download button or ?url= parameter missing.');
+        console.warn('Download button or ?url= missing.');
     }
 });
 </script>
-
     <script>
 document.addEventListener('DOMContentLoaded', () => {
     const miniPlayerButton = document.getElementById('mini-player-button');
