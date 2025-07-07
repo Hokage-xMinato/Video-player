@@ -1395,7 +1395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>-->
-    <script>
+  <script>
 document.addEventListener('DOMContentLoaded', () => {
     const downloadButton = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
@@ -1404,32 +1404,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (downloadButton && lessonUrl) {
         downloadButton.addEventListener('click', () => {
             try {
-                // IMPORTANT: Don't encode for intent:// — raw URL is expected
-                const oneDMIntentUrl = `intent:${lessonUrl}#Intent;scheme=https;package=com.dv.dm;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.dv.dm;end`;
+                // Construct intent:// link
+                const intentUrl = `intent://${lessonUrl.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.dv.dm;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.dv.dm;end`;
 
-                // Redirect to 1DM with the URL to download
-                window.location.href = oneDMIntentUrl;
+                // Redirect to intent
+                window.location.href = intentUrl;
 
-                // Optional feedback if SweetAlert2 is available
+                // Optional SweetAlert2 feedback
                 if (typeof Swal !== 'undefined') {
                     Swal.fire({
-                        title: 'Preparing Download',
-                        text: 'Trying to open 1DM. If not installed, you’ll be redirected to Play Store.',
+                        title: 'Launching 1DM',
+                        text: 'Download will begin shortly in 1DM. If not installed, you’ll be redirected to the Play Store.',
                         icon: 'info',
                         timer: 3000,
                         showConfirmButton: false
                     });
                 }
-            } catch (err) {
-                console.error('Error launching intent:', err);
+            } catch (error) {
+                console.error('Intent launch error:', error);
             }
         });
     } else {
         if (downloadButton) downloadButton.style.display = 'none';
-        console.warn('Missing download button or URL parameter.');
+        console.warn('Download button or ?url= param missing.');
     }
 });
-    </script>
+</script>
+
     
     <script>
 document.addEventListener('DOMContentLoaded', () => {
