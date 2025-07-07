@@ -1395,7 +1395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>-->
-   <script>
+  <script>
 document.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
@@ -1403,23 +1403,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (button && lessonUrl) {
         button.addEventListener('click', () => {
-            const oneDmUrl = `1dm://download?url=${encodeURIComponent(lessonUrl)}`;
+            const intentUrl = `intent:${lessonUrl}#Intent;scheme=https;package=idm.internet.download.manager;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
 
-            // Open 1DM
-            window.location.href = oneDmUrl;
+            // Try to open 1DM via intent
+            window.location.href = intentUrl;
 
-            // Fallback to correct Play Store link
-            setTimeout(() => {
-                window.location.href = "https://play.google.com/store/apps/details?id=idm.internet.download.manager";
-            }, 2000);
+            // Optional: SweetAlert
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Opening 1DM...',
+                    text: 'If not installed, Play Store will open.',
+                    icon: 'info',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            }
         });
     } else {
         if (button) button.style.display = 'none';
-        console.warn('Download button or URL param missing');
+        console.warn('Missing button or ?url=');
     }
 });
 </script>
-
 
     <script>
 document.addEventListener('DOMContentLoaded', () => {
