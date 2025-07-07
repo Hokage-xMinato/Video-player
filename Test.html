@@ -1395,26 +1395,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>-->
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const button = document.getElementById('download-button');
+    const downloadButton = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
-    const lessonUrl = urlParams.get('url'); // Get video URL from ?url= param
-    const quality = urlParams.get('q') || "720"; // Optional quality value
+    const rawUrl = urlParams.get('url');
+    const quality = urlParams.get('q') || "720";
 
-    if (button && lessonUrl) {
-        button.addEventListener('click', () => {
-            const intentUrl = `intent:${lessonUrl}#Intent;package=idm.internet.download.manager;S.title=StudySmarter_Video_${quality}p;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
+    if (downloadButton && rawUrl) {
+        downloadButton.addEventListener('click', () => {
+            let finalUrl = rawUrl;
+            if (finalUrl.includes('|')) finalUrl = finalUrl.split('|')[0]; // sanitize if contains quality tokens
+            finalUrl = decodeURIComponent(finalUrl);
 
-            // Trigger 1DM intent
-            window.location.href = intentUrl;
+            const intent = `intent:${finalUrl}#Intent;package=idm.internet.download.manager;S.title=StudySmarter_Video_${quality}p;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
 
-            // Optional feedback (SweetAlert2)
+            window.location.href = intent;
+
+            // Optional feedback
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: 'Starting Download',
-                    text: 'Opening in 1DM. If not installed, Play Store will open.',
+                    text: 'Trying to open 1DM. If not installed, Play Store will open.',
                     icon: 'info',
                     timer: 3000,
                     showConfirmButton: false
@@ -1422,11 +1424,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     } else {
-        if (button) button.style.display = 'none';
-        console.warn('Download button or ?url= missing.');
+        if (downloadButton) downloadButton.style.display = 'none';
+        console.warn("Download button or ?url= param missing.");
     }
 });
 </script>
+
     <script>
 document.addEventListener('DOMContentLoaded', () => {
     const miniPlayerButton = document.getElementById('mini-player-button');
