@@ -1395,7 +1395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
     </script>-->
-  <script>
+ <script>
 document.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
@@ -1403,16 +1403,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (button && lessonUrl) {
         button.addEventListener('click', () => {
+            // Correct intent URI with fallback
             const intentUrl = `intent:${lessonUrl}#Intent;scheme=https;package=idm.internet.download.manager;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
 
-            // Try to open 1DM via intent
+            // Launch 1DM or fallback to Play Store
             window.location.href = intentUrl;
 
-            // Optional: SweetAlert
+            // Optional user feedback (SweetAlert2)
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
-                    title: 'Opening 1DM...',
-                    text: 'If not installed, Play Store will open.',
+                    title: 'Launching 1DM',
+                    text: 'If 1DM is not installed, Play Store will open.',
                     icon: 'info',
                     timer: 3000,
                     showConfirmButton: false
@@ -1421,7 +1422,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         if (button) button.style.display = 'none';
-        console.warn('Missing button or ?url=');
+        console.warn('Download button or ?url= parameter missing.');
     }
 });
 </script>
