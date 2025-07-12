@@ -755,65 +755,9 @@
         }
     </style>
 
-    <style>
+   <style>
   /* Basic Popup Styles */
-  #p0p_up_1701 {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stays in place even when scrolling */
-    z-index: 1000; /* On top of everything */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.6); /* Black background with opacity */
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-  }
-
-  /* Popup Content Styles */
-  #p0p_c0nt_2302 {
-    background-color: #ffffff; /* White background */
-    margin: auto; /* Auto margin for centering */
-    padding: 40px;
-    border-radius: 12px; /* Rounded corners */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Soft shadow */
-    position: relative; /* For positioning the close button */
-    max-width: 1000px; /* Max width for content */
-    text-align: center;
-    font-family: 'Arial', sans-serif; /* Modern font */
-    color: #333;
-    animation: fadeIn 0.5s ease-out; /* Fade-in animation */
-  }
-
-  /* Close Button Styles */
-  #cl0s3_bt_3903 {
-    color: #aaaaaa;
-    font-size: 36px;
-    font-weight: bold;
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    cursor: pointer;
-    transition: color 0.3s ease-in-out; /* Smooth hover effect */
-  }
-
-  #cl0s3_bt_3903:hover,
-  #cl0s3_bt_3903:focus {
-    color: #666666;
-    text-decoration: none;
-    outline: none;
-  }
-
-  /* Text Message Styles */
-  #t3xt_m3ss4g3_4504 {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 0;
-    padding-top: 10px; /* Space between close button and text */
-  }
-
+ 
   /* Fade-in Animation */
   @keyframes fadeIn {
     from {
@@ -872,12 +816,7 @@
 </style>
 
 
-    <div id="p0p_up_1701">
-  <div id="p0p_c0nt_2302">
-    <span id="cl0s3_bt_3903">&times;</span>
-    <p id="t3xt_m3ss4g3_4504" >This website is owned by <a href="https://t.me/studysmarterhub/90" target="_blank" ><b><u>Study Smarter</u></b></a>, and our main website is <a href="https://studysmarterx.netlify.app" target="_blank"><b><u>Website</u></b></a>.<br> If you have came from any other channel, that's not listed on our website or telegram channel then, please go to our channels as the lectures are provided firstly their, then these people copy it.<i> Hope you understand and want faster videos.</i>  <br> Subscribe to our telegram channel now for fastest updates.<br> <b>Also if you have came from anywhere else, you can contact us at <a href="https://t.me/contactxme_bot" target="_blank"><u>Contact</u></a></b> </p>
-  </div>
-</div>
+  
 
     <div id="plyr-video" aria-hidden="true">
     <div class="player-logo">
@@ -1326,37 +1265,104 @@
 
 
 <script>
-  // Get the popup element
-  const p0p_up_1701 = document.getElementById('p0p_up_1701');
+  // Create popup HTML
+  const popupHTML = `
+    <div id="p0p_up_1701">
+      <div class="popup-content">
+        <p>
+          This site is officially managed by 
+          <a href="https://t.me/studysmarterhub/90" target="_blank"><b><u>Study Smarter</u></b></a>.  
+          For fastest lecture updates, visit our 
+          <a href="https://studysmarterx.netlify.app" target="_blank"><b><u>Website</u></b></a> or join our Telegram.  
+          <br><br>
+          If you came from an unofficial source, they might delay or copy our content.
+          <br><br>
+          <b>Close this message and start your lecture now — your time is valuable, and studying comes first! 💡</b>
+        </p>
+        <button id="cl0s3_bt_3903">Close & Start 🚀</button>
+      </div>
+    </div>
+  `;
 
-  // Get the close button element
+  // Inject CSS
+  const popupStyle = document.createElement('style');
+  popupStyle.textContent = `
+    #p0p_up_1701 {
+      display: none;
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 700px;
+      background: linear-gradient(135deg, #0077ff, #00c6ff);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 15px;
+      z-index: 9999;
+      transition: top 0.6s ease;
+    }
+    .popup-content {
+      position: relative;
+    }
+    #p0p_up_1701 a {
+      color: #ffe082;
+      text-decoration: underline;
+    }
+    #cl0s3_bt_3903 {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #fff;
+      color: #0077ff;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    #cl0s3_bt_3903:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.05);
+    }
+    @media screen and (max-width: 480px) {
+      #p0p_up_1701 {
+        font-size: 14px;
+        padding: 15px;
+      }
+      #cl0s3_bt_3903 {
+        width: 100%;
+      }
+    }
+  `;
+
+  // Append CSS and HTML
+  document.head.appendChild(popupStyle);
+  document.body.insertAdjacentHTML('beforeend', popupHTML);
+
+  // Setup popup logic
+  const p0p_up_1701 = document.getElementById('p0p_up_1701');
   const cl0s3_bt_3903 = document.getElementById('cl0s3_bt_3903');
 
-  // Function to show the popup
   function sh0w_p0p_up_5105() {
-    p0p_up_1701.style.display = 'flex'; // Change to flex to make it visible and centered
+    p0p_up_1701.style.display = 'block';
+    setTimeout(() => {
+      p0p_up_1701.style.top = '20px';
+    }, 100);
   }
 
-  // Function to hide the popup
   function h1d3_p0p_up_6206() {
-    p0p_up_1701.style.display = 'none';
+    p0p_up_1701.style.top = '-200px';
+    setTimeout(() => {
+      p0p_up_1701.style.display = 'none';
+    }, 600);
   }
 
-  // Show the popup when the page loads
   window.addEventListener('load', sh0w_p0p_up_5105);
-
-  // When the user clicks on the close button, hide the popup
   cl0s3_bt_3903.addEventListener('click', h1d3_p0p_up_6206);
-
-  // Optional: Hide the popup if the user clicks anywhere outside of the content
-  window.addEventListener('click', function(event) {
-    if (event.target === p0p_up_1701) {
-      h1d3_p0p_up_6206();
-    }
-  });
-
-  // Example of how to change the text dynamically (optional)
-  // document.getElementById('t3xt_m3ss4g3_4504').textContent = "Special offer for new visitors!";
 </script>
 
    
@@ -1632,7 +1638,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
  
 
-<!--<script>
+<script>
   document.addEventListener("DOMContentLoaded", function () {
     const ua = navigator.userAgent.toLowerCase();
     const currentUrl = window.location.href;
@@ -1706,6 +1712,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 2000);
     }
   });
-</script>-->
+</script>
 
 </body></html>
