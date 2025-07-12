@@ -1516,24 +1516,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!quality) {
                 if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        title: 'Select Video Quality',
-                        text: 'Choose a quality to download:',
-                        icon: 'question',
-                        showCancelButton: true,
-                        showDenyButton: true,
-                        confirmButtonText: '720p',
-                        denyButtonText: '360p',
-                        cancelButtonText: '240p'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            downloadWithQuality("720");
-                        } else if (result.isDenied) {
-                            downloadWithQuality("360");
-                        } else {
-                            downloadWithQuality("240");
-                        }
-                    });
+                  Swal.fire({
+  title: 'Select Video Quality',
+  html: `
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <button class="swal2-confirm swal2-styled" onclick="selectQuality('240')">240p</button>
+      <button class="swal2-confirm swal2-styled" onclick="selectQuality('360')">360p</button>
+      <button class="swal2-confirm swal2-styled" onclick="selectQuality('480')">480p</button>
+      <button class="swal2-confirm swal2-styled" onclick="selectQuality('720')">720p</button>
+    </div>
+  `,
+  showConfirmButton: false,
+  allowOutsideClick: false,
+  didOpen: () => {
+    window.selectQuality = function (q) {
+      Swal.close();
+      downloadWithQuality(q);
+    };
+  }
+});
+
                 } else {
                     const selected = prompt("Enter quality (240, 360, 480, 720):", "360");
                     downloadWithQuality(selected);
