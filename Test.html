@@ -1550,5 +1550,80 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
  
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ua = navigator.userAgent.toLowerCase();
+    const currentUrl = window.location.href;
+
+    if (ua.includes("telegram")) {
+      document.head.innerHTML = `
+        <meta charset="UTF-8">
+        <title>Redirecting...</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          * { box-sizing: border-box; }
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #fff;
+            text-align: center;
+          }
+          .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+          }
+          h2 { font-size: 2em; margin-bottom: 10px; }
+          p { font-size: 1.1em; margin-bottom: 20px; }
+          .loader {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+          }
+          a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #ffffff;
+            background-color: #1e90ff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+          }
+          a:hover { background-color: #0c7cd5; }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        </style>
+      `;
+      document.body.innerHTML = `
+        <div class="container">
+          <h2>⚠️ Opening in Default Browser...</h2>
+          <div class="loader"></div>
+          <p>Your current browser (like Telegram) may not support all features.</p>
+          <p>We're taking you to a better experience in your default browser.</p>
+          <p>If you're not redirected, <a href="${currentUrl}">click here</a>.</p>
+        </div>
+      `;
+      setTimeout(function () {
+        window.location.href = currentUrl;
+      }, 2000);
+    }
+  });
+</script>
 
 </body></html>
