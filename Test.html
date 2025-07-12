@@ -1394,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>-->
-    <script>
+<!--    <script>
 document.addEventListener('DOMContentLoaded', () => {
     const downloadButton = document.getElementById('download-button');
     const urlParams = new URLSearchParams(window.location.search);
@@ -1452,6 +1452,88 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else {
                 trigger1DMDownload(finalUrl, quality);
+            }
+        });
+    } else {
+        if (downloadButton) downloadButton.style.display = 'none';
+        console.warn("Download button or ?url= missing.");
+    }
+});
+</script>
+-->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const downloadButton = document.getElementById('download-button');
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawUrl = urlParams.get('url');
+    let quality = urlParams.get('q'); // may be null
+
+    const qualityMap = {
+        "240": "1",
+        "360": "2",
+        "480": "3",
+        "720": "4"
+    };
+
+    function getModifiedUrl(baseUrl, selectedQuality) {
+        // Support index_1.m3u8 and index_1.M3U8 using case-insensitive regex
+        return baseUrl.replace(/index_\d+\.m3u8/i, `index_${qualityMap[selectedQuality]}.m3u8`);
+    }
+
+    function trigger1DMDownload(finalUrl, selectedQuality) {
+        const intent = `intent:${finalUrl}#Intent;package=idm.internet.download.manager;S.title=StudySmarter_Video_${selectedQuality}p;S.browser_fallback_url=https://play.google.com/store/apps/details?id=idm.internet.download.manager;end`;
+        window.location.href = intent;
+
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: 'Starting Download',
+                text: `Opening ${selectedQuality}p video in 1DM...`,
+                icon: 'info',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }
+    }
+
+    if (downloadButton && rawUrl) {
+        downloadButton.addEventListener('click', () => {
+            const baseUrl = decodeURIComponent(rawUrl.split('|')[0]);
+
+            function downloadWithQuality(selectedQuality) {
+                if (!qualityMap[selectedQuality]) {
+                    alert("Invalid quality selected.");
+                    return;
+                }
+                const modifiedUrl = getModifiedUrl(baseUrl, selectedQuality);
+                trigger1DMDownload(modifiedUrl, selectedQuality);
+            }
+
+            if (!quality) {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Select Video Quality',
+                        text: 'Choose a quality to download:',
+                        icon: 'question',
+                        showCancelButton: true,
+                        showDenyButton: true,
+                        confirmButtonText: '720p',
+                        denyButtonText: '360p',
+                        cancelButtonText: '240p'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            downloadWithQuality("720");
+                        } else if (result.isDenied) {
+                            downloadWithQuality("360");
+                        } else {
+                            downloadWithQuality("240");
+                        }
+                    });
+                } else {
+                    const selected = prompt("Enter quality (240, 360, 480, 720):", "360");
+                    downloadWithQuality(selected);
+                }
+            } else {
+                downloadWithQuality(quality);
             }
         });
     } else {
