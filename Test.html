@@ -1714,7 +1714,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 2000);
     }
   });
-</script>-->
+</script>
     <script>
   document.addEventListener("DOMContentLoaded", function () {
     const ua = navigator.userAgent.toLowerCase();
@@ -1782,6 +1782,93 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 </script>
+-->
+    
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ua = navigator.userAgent.toLowerCase();
+    const isTelegram = ua.includes("telegram");
 
+    // Get the original ?url=... value
+    const params = new URLSearchParams(window.location.search);
+    const rawVideoUrl = params.get("url");
+
+    if (!rawVideoUrl) {
+      document.body.innerHTML = `
+        <div style="font-family:sans-serif;text-align:center;padding:40px;">
+          <h2>⚠️ No video URL provided</h2>
+          <p>This page requires a <code>?url=</code> parameter.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Construct the final iframe page you want to open
+    const iframePageUrl = `https://studysmarterx.netlify.app/iframe.html?src=${encodeURIComponent(rawVideoUrl)}`;
+
+    if (isTelegram) {
+      // In Telegram → show UI + auto-open full iframe page
+      document.head.innerHTML = `
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Open in Browser</title>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #fff;
+            text-align: center;
+          }
+          .container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            max-width: 90%;
+          }
+          h2 { font-size: 1.8em; margin-bottom: 10px; }
+          p { font-size: 1.1em; margin-bottom: 20px; }
+          a.button {
+            color: #ffffff;
+            background-color: #1e90ff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+          }
+          a.button:hover {
+            background-color: #0c7cd5;
+          }
+        </style>
+      `;
+
+      document.body.innerHTML = `
+        <div class="container">
+          <h2>⚠️ Video can't be loaded in Telegram</h2>
+          <p>We're opening the correct viewer in your full browser.</p>
+          <a class="button" href="${iframePageUrl}">🚀 Open in Browser</a>
+        </div>
+      `;
+
+      setTimeout(() => {
+        window.location.href = iframePageUrl;
+      }, 2000);
+    } else {
+      // Not Telegram → load iframe here directly
+      const iframe = document.createElement("iframe");
+      iframe.src = rawVideoUrl;
+      iframe.style = "width:100%; height:100vh; border:none;";
+      document.body.appendChild(iframe);
+    }
+  });
+</script>
 
 </body></html>
