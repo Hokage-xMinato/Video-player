@@ -1,2 +1,1 @@
-/*
-  Content-Security-Policy: frame-ancestors https://studysmarterx.netlify.app https://studysmarterplayer.netlify.app;
+Content-Security-Policy: frame-ancestors https://studysmarterx.netlify.app https://studysmarterplayer.netlify.app;
