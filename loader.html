@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Full GIF Preloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full Screen GIF Preloader</title>
   <script>
     window.addEventListener("load", function () {
       const style = document.createElement("style");
@@ -12,7 +12,7 @@
           margin: 0;
           padding: 0;
           overflow: hidden;
-          font-family: 'Poppins', sans-serif;
+          font-family: Arial, sans-serif;
         }
 
         #preloader {
@@ -21,20 +21,12 @@
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-          background-size: 400% 400%;
-          animation: gradientShift 10s ease infinite;
           display: flex;
           justify-content: center;
           align-items: center;
           z-index: 9999;
           transition: opacity 1s ease;
-        }
-
-        @keyframes gradientShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          background: transparent;
         }
 
         #preloader.fade-out {
@@ -52,19 +44,20 @@
           width: 100%;
           height: 100%;
           object-fit: cover;
+          display: block;
         }
 
         .progress-bar-container {
           position: absolute;
-          bottom: 60px;
+          bottom: 50px;
           left: 50%;
           transform: translateX(-50%);
           width: 220px;
-          height: 12px;
+          height: 14px;
           background: rgba(255, 255, 255, 0.25);
-          border-radius: 6px;
+          border-radius: 7px;
           overflow: hidden;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
         }
 
         .progress-bar-fill {
@@ -72,6 +65,7 @@
           width: 0%;
           background: linear-gradient(to right, #ffffff, #00ffee);
           animation: fillProgress 6s ease forwards;
+          border-radius: 7px 0 0 7px;
         }
 
         @keyframes fillProgress {
@@ -93,22 +87,20 @@
       `;
       document.body.appendChild(preloader);
 
-      // Remove preloader after animation completes
       setTimeout(() => {
         preloader.classList.add("fade-out");
         setTimeout(() => {
           preloader.remove();
           document.body.style.overflow = "auto";
         }, 1000);
-      }, 6000); // match animation
+      }, 6000);
     });
   </script>
 </head>
 <body>
-  <!-- Your website content -->
   <div style="text-align: center; padding-top: 50vh;">
     <h1>Welcome to the Site</h1>
-    <p>The preloader now uses a full-page GIF and a built-in progress bar.</p>
+    <p>This page shows a full screen GIF preloader without background.</p>
   </div>
 </body>
 </html>
