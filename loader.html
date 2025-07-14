@@ -1,141 +1,130 @@
-<html><head><title>loader</title><script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Inject styles
-    const style = document.createElement("style");
-    style.textContent = `
-      body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: #000;
-      }
+<html>
+<head>
+  <title>Enhanced Loader with Real Loading</title>
+  <script>
+    window.addEventListener("load", function () {
+      // Inject styles
+      const style = document.createElement("style");
+      style.textContent = `
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
-      #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #000;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        opacity: 1;
-        transition: opacity 1s ease;
-      }
-
-      #preloader.fade-out {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      #preloader img {
-        width: 150px;
-        height: auto;
-        margin-bottom: 20px;
-      }
-
-      .loading-text {
-        font-size: 28px;
-        font-weight: bold;
-        background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff00, #ffff00, #ff00ff);
-        background-size: 300% 300%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: rainbowText 3s linear infinite;
-        margin-bottom: 20px;
-      }
-
-      @keyframes rainbowText {
-        0% { background-position: 0% 50%; }
-        100% { background-position: 100% 50%; }
-      }
-
-      .progress-bar-container {
-        width: 60%;
-        height: 30px;
-        border-radius: 20px;
-        background: #111;
-        overflow: hidden;
-        box-shadow: 0 0 10px #00f5ffaa;
-        position: relative;
-      }
-
-      .progress-bar-fill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(to top, #00bfff, #00e5ff);
-        animation: fillProgress 10s linear forwards;
-        position: relative;
-        z-index: 1;
-      }
-
-      @keyframes fillProgress {
-        from { width: 0%; }
-        to { width: 100%; }
-      }
-
-      .progress-text {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        top: 0;
-        left: 0;
-        color: #fff;
-        font-weight: bold;
-        font-family: monospace;
-        z-index: 2;
-      }
-
-      #main-content {
-        display: none;
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Inject preloader HTML
-    const preloader = document.createElement("div");
-    preloader.id = "preloader";
-    preloader.innerHTML = `
-      <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading...">
-      <div class="loading-text">Loading...</div>
-      <div class="progress-bar-container">
-        <div class="progress-bar-fill" id="progress-fill"></div>
-        <div class="progress-text" id="progress-text">0%</div>
-      </div>
-    `;
-    document.body.appendChild(preloader);
-
-    // Get main content
-    const mainContent = document.getElementById("main-content");
-
-    // Update loading percent over 10s
-    const duration = 10000;
-    let elapsed = 0;
-    const interval = 100;
-    const percentText = document.getElementById("progress-text");
-
-    const updatePercent = setInterval(() => {
-      elapsed += interval;
-      const percent = Math.min(100, Math.floor((elapsed / duration) * 100));
-      percentText.textContent = percent + "%";
-      if (percent >= 100) clearInterval(updatePercent);
-    }, interval);
-
-    // After 10s, fade out preloader and show content
-    setTimeout(() => {
-      preloader.classList.add("fade-out");
-      setTimeout(() => {
-        preloader.remove();
-        if (mainContent) {
-          mainContent.style.display = "block";
-          document.body.style.overflow = "auto";
+        body {
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
         }
-      }, 1000);
-    }, duration);
-  });
-</script></head>
-  <body><div id= "main-content">Welcome</div></body>
+
+        #preloader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: #000;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+          opacity: 1;
+          transition: opacity 1s ease, background 1s ease;
+        }
+
+        #preloader.fade-out {
+          opacity: 0;
+          background: transparent;
+          pointer-events: none;
+        }
+
+        #preloader img {
+          width: 120px;
+          height: auto;
+          margin-bottom: 30px;
+          filter: drop-shadow(0 0 10px #00eaff);
+        }
+
+        .loading-text {
+          font-size: 32px;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+          color: #fff;
+          text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00f0ff;
+          animation: pulse 1.5s infinite ease-in-out;
+          letter-spacing: 2px;
+          margin-bottom: 30px;
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 0.85;
+          }
+        }
+
+        .progress-bar-container {
+          width: 60%;
+          height: 8px;
+          background: #111;
+          border-radius: 4px;
+          overflow: hidden;
+          box-shadow: 0 0 10px #00f5ffaa;
+        }
+
+        .progress-bar-fill {
+          height: 100%;
+          width: 0%;
+          background: linear-gradient(to right, #00f0ff, #00ffb7);
+          animation: fillProgress 6s linear forwards;
+        }
+
+        @keyframes fillProgress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+
+        #main-content {
+          display: none;
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Inject preloader HTML
+      const preloader = document.createElement("div");
+      preloader.id = "preloader";
+      preloader.innerHTML = `
+        <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading...">
+        <div class="loading-text">Loading, please wait...</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill"></div>
+        </div>
+      `;
+      document.body.appendChild(preloader);
+
+      // After progress animation (6s), fade out preloader
+      const duration = 6000;
+      const mainContent = document.getElementById("main-content");
+
+      setTimeout(() => {
+        preloader.classList.add("fade-out");
+        setTimeout(() => {
+          preloader.remove();
+          if (mainContent) {
+            mainContent.style.display = "block";
+            document.body.style.overflow = "auto";
+          }
+        }, 1000); // Matches fade-out transition
+      }, duration);
+    });
+  </script>
+</head>
+<body>
+  <div id="main-content">
+    <h1 style="text-align:center;">Welcome</h1>
+    <p style="text-align:center;">Your website is fully loaded with zero lag!</p>
+  </div>
+</body>
 </html>
