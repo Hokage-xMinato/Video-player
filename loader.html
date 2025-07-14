@@ -1,6 +1,9 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Colorful Smooth Preloader</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elegant Preloader</title>
   <script>
     window.addEventListener("load", function () {
       const style = document.createElement("style");
@@ -10,8 +13,8 @@
         body {
           margin: 0;
           padding: 0;
-          overflow: hidden;
           font-family: 'Poppins', sans-serif;
+          overflow: hidden;
         }
 
         #preloader {
@@ -20,9 +23,9 @@
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: linear-gradient(135deg, #ff00cc, #3333ff, #00ffff);
-          background-size: 300% 300%;
-          animation: gradientShift 6s ease infinite;
+          background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+          background-size: 400% 400%;
+          animation: gradientShift 10s ease infinite;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -43,16 +46,16 @@
         }
 
         #preloader img {
-          width: 100px;
+          width: 160px;
           height: auto;
-          margin-bottom: 30px;
+          margin-bottom: 40px;
         }
 
         .progress-bar-container {
-          width: 200px;
-          height: 30px;
-          background: rgba(255, 255, 255, 0.15);
-          border-radius: 15px;
+          width: 220px;
+          height: 20px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 10px;
           overflow: hidden;
           position: relative;
         }
@@ -62,12 +65,7 @@
           width: 0%;
           background: linear-gradient(to right, #ffffff, #00ffee);
           animation: fillProgress 6s ease forwards;
-          border-radius: 15px 0 0 15px;
-        }
-
-        @keyframes fillProgress {
-          0% { width: 0%; }
-          100% { width: 100%; }
+          border-radius: 10px;
         }
 
         .loading-text {
@@ -80,20 +78,21 @@
           align-items: center;
           justify-content: center;
           color: #000;
-          font-size: 16px;
+          font-size: 15px;
           font-weight: 600;
           animation: pulse 1.5s ease-in-out infinite;
           z-index: 2;
           user-select: none;
         }
 
+        @keyframes fillProgress {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.85; transform: scale(1.05); }
-        }
-
-        #main-content {
-          display: none;
         }
       `;
       document.head.appendChild(style);
@@ -101,7 +100,7 @@
       const preloader = document.createElement("div");
       preloader.id = "preloader";
       preloader.innerHTML = `
-        <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading...">
+        <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading animation">
         <div class="progress-bar-container">
           <div class="progress-bar-fill"></div>
           <div class="loading-text">Loading</div>
@@ -109,27 +108,20 @@
       `;
       document.body.appendChild(preloader);
 
-      const mainContent = document.getElementById("main-content");
-
-      // Fade out after animation finishes
-      const duration = 6000;
+      // Remove preloader after animation finishes
       setTimeout(() => {
         preloader.classList.add("fade-out");
         setTimeout(() => {
           preloader.remove();
-          if (mainContent) {
-            mainContent.style.display = "block";
-            document.body.style.overflow = "auto";
-          }
-        }, 1000);
-      }, duration);
+          document.body.style.overflow = "auto";
+        }, 1000); // match fade-out time
+      }, 6000); // match progress bar animation
     });
   </script>
 </head>
 <body>
-  <div id="main-content">
-    <h1 style="text-align:center;">Welcome to the Final Version</h1>
-    <p style="text-align:center;">Now with text inside the progress bar!</p>
-  </div>
+  <!-- Your normal content goes here -->
+  <h1 style="text-align:center; margin-top: 50vh; font-size: 2em;">Your Website Content</h1>
+  <p style="text-align:center;">Now the preloader works independently and beautifully.</p>
 </body>
 </html>
