@@ -1,17 +1,17 @@
 <html>
 <head>
-  <title>Enhanced Loader with Real Loading</title>
+  <title>Colorful Smooth Preloader</title>
   <script>
     window.addEventListener("load", function () {
-      // Inject styles
       const style = document.createElement("style");
       style.textContent = `
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
         body {
           margin: 0;
           padding: 0;
           overflow: hidden;
+          font-family: 'Poppins', sans-serif;
         }
 
         #preloader {
@@ -20,70 +20,65 @@
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: #000;
+          background: linear-gradient(135deg, #ff00cc, #3333ff, #00ffff);
+          background-size: 300% 300%;
+          animation: gradientShift 6s ease infinite;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           z-index: 9999;
-          opacity: 1;
-          transition: opacity 1s ease, background 1s ease;
+          transition: opacity 1s ease;
+        }
+
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
 
         #preloader.fade-out {
           opacity: 0;
-          background: transparent;
           pointer-events: none;
         }
 
         #preloader img {
-          width: 120px;
+          width: 100px;
           height: auto;
-          margin-bottom: 30px;
-          filter: drop-shadow(0 0 10px #00eaff);
+          margin-bottom: 20px;
         }
 
         .loading-text {
-          font-size: 32px;
-          font-family: 'Poppins', sans-serif;
-          font-weight: 600;
-          color: #fff;
-          text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00f0ff;
-          animation: pulse 1.5s infinite ease-in-out;
+          font-size: 20px;
+          color: white;
           letter-spacing: 2px;
-          margin-bottom: 30px;
+          margin-bottom: 25px;
+          animation: pulse 1.5s ease-in-out infinite;
         }
 
         @keyframes pulse {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.1);
-            opacity: 0.85;
-          }
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         .progress-bar-container {
-          width: 60%;
-          height: 8px;
-          background: #111;
-          border-radius: 4px;
+          width: 180px;
+          height: 6px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 3px;
           overflow: hidden;
-          box-shadow: 0 0 10px #00f5ffaa;
         }
 
         .progress-bar-fill {
           height: 100%;
           width: 0%;
-          background: linear-gradient(to right, #00f0ff, #00ffb7);
-          animation: fillProgress 6s linear forwards;
+          background: linear-gradient(to right, #ffffff, #00ffee);
+          animation: fillProgress 6s ease forwards;
         }
 
         @keyframes fillProgress {
-          from { width: 0%; }
-          to { width: 100%; }
+          0% { width: 0%; }
+          100% { width: 100%; }
         }
 
         #main-content {
@@ -92,22 +87,21 @@
       `;
       document.head.appendChild(style);
 
-      // Inject preloader HTML
       const preloader = document.createElement("div");
       preloader.id = "preloader";
       preloader.innerHTML = `
         <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading...">
-        <div class="loading-text">Loading, please wait...</div>
+        <div class="loading-text">Loading</div>
         <div class="progress-bar-container">
           <div class="progress-bar-fill"></div>
         </div>
       `;
       document.body.appendChild(preloader);
 
-      // After progress animation (6s), fade out preloader
-      const duration = 6000;
       const mainContent = document.getElementById("main-content");
 
+      // Fade out after animation finishes
+      const duration = 6000;
       setTimeout(() => {
         preloader.classList.add("fade-out");
         setTimeout(() => {
@@ -116,15 +110,15 @@
             mainContent.style.display = "block";
             document.body.style.overflow = "auto";
           }
-        }, 1000); // Matches fade-out transition
+        }, 1000);
       }, duration);
     });
   </script>
 </head>
 <body>
   <div id="main-content">
-    <h1 style="text-align:center;">Welcome</h1>
-    <p style="text-align:center;">Your website is fully loaded with zero lag!</p>
+    <h1 style="text-align:center;">Welcome to the Final Version</h1>
+    <p style="text-align:center;">Now your site loads beautifully, smoothly, and with style 🎉</p>
   </div>
 </body>
 </html>
