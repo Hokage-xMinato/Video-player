@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elegant Preloader</title>
+  <title>Full GIF Preloader</title>
   <script>
     window.addEventListener("load", function () {
       const style = document.createElement("style");
       style.textContent = `
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
-
         body {
           margin: 0;
           padding: 0;
-          font-family: 'Poppins', sans-serif;
           overflow: hidden;
+          font-family: 'Poppins', sans-serif;
         }
 
         #preloader {
@@ -27,7 +25,6 @@
           background-size: 400% 400%;
           animation: gradientShift 10s ease infinite;
           display: flex;
-          flex-direction: column;
           justify-content: center;
           align-items: center;
           z-index: 9999;
@@ -45,19 +42,29 @@
           pointer-events: none;
         }
 
-        #preloader img {
-          width: 160px;
-          height: auto;
-          margin-bottom: 40px;
+        .gif-container {
+          position: relative;
+          width: 100vw;
+          height: 100vh;
+        }
+
+        .gif-container img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         .progress-bar-container {
+          position: absolute;
+          bottom: 60px;
+          left: 50%;
+          transform: translateX(-50%);
           width: 220px;
-          height: 20px;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 10px;
+          height: 12px;
+          background: rgba(255, 255, 255, 0.25);
+          border-radius: 6px;
           overflow: hidden;
-          position: relative;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         .progress-bar-fill {
@@ -65,34 +72,11 @@
           width: 0%;
           background: linear-gradient(to right, #ffffff, #00ffee);
           animation: fillProgress 6s ease forwards;
-          border-radius: 10px;
-        }
-
-        .loading-text {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #000;
-          font-size: 15px;
-          font-weight: 600;
-          animation: pulse 1.5s ease-in-out infinite;
-          z-index: 2;
-          user-select: none;
         }
 
         @keyframes fillProgress {
           0% { width: 0%; }
           100% { width: 100%; }
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.85; transform: scale(1.05); }
         }
       `;
       document.head.appendChild(style);
@@ -100,28 +84,31 @@
       const preloader = document.createElement("div");
       preloader.id = "preloader";
       preloader.innerHTML = `
-        <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading animation">
-        <div class="progress-bar-container">
-          <div class="progress-bar-fill"></div>
-          <div class="loading-text">Loading</div>
+        <div class="gif-container">
+          <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading animation" />
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill"></div>
+          </div>
         </div>
       `;
       document.body.appendChild(preloader);
 
-      // Remove preloader after animation finishes
+      // Remove preloader after animation completes
       setTimeout(() => {
         preloader.classList.add("fade-out");
         setTimeout(() => {
           preloader.remove();
           document.body.style.overflow = "auto";
-        }, 1000); // match fade-out time
-      }, 6000); // match progress bar animation
+        }, 1000);
+      }, 6000); // match animation
     });
   </script>
 </head>
 <body>
-  <!-- Your normal content goes here -->
-  <h1 style="text-align:center; margin-top: 50vh; font-size: 2em;">Your Website Content</h1>
-  <p style="text-align:center;">Now the preloader works independently and beautifully.</p>
+  <!-- Your website content -->
+  <div style="text-align: center; padding-top: 50vh;">
+    <h1>Welcome to the Site</h1>
+    <p>The preloader now uses a full-page GIF and a built-in progress bar.</p>
+  </div>
 </body>
 </html>
