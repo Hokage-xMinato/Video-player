@@ -45,28 +45,16 @@
         #preloader img {
           width: 100px;
           height: auto;
-          margin-bottom: 20px;
-        }
-
-        .loading-text {
-          font-size: 20px;
-          color: white;
-          letter-spacing: 2px;
-          margin-bottom: 25px;
-          animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.05); }
+          margin-bottom: 30px;
         }
 
         .progress-bar-container {
-          width: 180px;
-          height: 6px;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 3px;
+          width: 200px;
+          height: 30px;
+          background: rgba(255, 255, 255, 0.15);
+          border-radius: 15px;
           overflow: hidden;
+          position: relative;
         }
 
         .progress-bar-fill {
@@ -74,11 +62,34 @@
           width: 0%;
           background: linear-gradient(to right, #ffffff, #00ffee);
           animation: fillProgress 6s ease forwards;
+          border-radius: 15px 0 0 15px;
         }
 
         @keyframes fillProgress {
           0% { width: 0%; }
           100% { width: 100%; }
+        }
+
+        .loading-text {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #000;
+          font-size: 16px;
+          font-weight: 600;
+          animation: pulse 1.5s ease-in-out infinite;
+          z-index: 2;
+          user-select: none;
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.85; transform: scale(1.05); }
         }
 
         #main-content {
@@ -91,9 +102,9 @@
       preloader.id = "preloader";
       preloader.innerHTML = `
         <img src="https://cdn.dribbble.com/userupload/29241623/file/original-8e2c92eff5416be8db70f236727bfacb.gif" alt="Loading...">
-        <div class="loading-text">Loading</div>
         <div class="progress-bar-container">
           <div class="progress-bar-fill"></div>
+          <div class="loading-text">Loading</div>
         </div>
       `;
       document.body.appendChild(preloader);
@@ -118,7 +129,7 @@
 <body>
   <div id="main-content">
     <h1 style="text-align:center;">Welcome to the Final Version</h1>
-    <p style="text-align:center;">Now your site loads beautifully, smoothly, and with style 🎉</p>
+    <p style="text-align:center;">Now with text inside the progress bar!</p>
   </div>
 </body>
 </html>
