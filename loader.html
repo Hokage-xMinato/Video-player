@@ -4,30 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Full Screen GIF Preloader</title>
+  <style>
+    /* Hide all content initially */
+    #page-content {
+      display: none;
+    }
+  </style>
   <script>
     window.addEventListener("load", function () {
+      // Create styles dynamically for preloader
       const style = document.createElement("style");
       style.textContent = `
         body {
           margin: 0;
           padding: 0;
-          overflow: hidden;
+          overflow: hidden; /* Prevent scrolling during preload */
           font-family: Arial, sans-serif;
         }
 
         #preloader {
           position: fixed;
-          top: 0;
-          left: 0;
+          top: 0; left: 0;
           width: 100vw;
           height: 100vh;
+          z-index: 9999;
+          background: transparent;
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 9999;
-          transition: opacity 1s ease;
-          background: transparent;
           flex-direction: column;
+          transition: opacity 1s ease;
+          pointer-events: all;
         }
 
         #preloader.fade-out {
@@ -39,23 +46,20 @@
           position: relative;
           width: 100vw;
           height: 100vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
           overflow: hidden;
         }
 
         .gif-container img {
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
+          width: 100vw;
+          height: 100vh;
+          object-fit: cover; /* Fill entire screen, cropping if needed */
           display: block;
           user-select: none;
         }
 
         .progress-bar-container {
           position: absolute;
-          bottom: 60px;
+          bottom: 50px;
           left: 50%;
           transform: translateX(-50%);
           width: 260px;
@@ -69,19 +73,13 @@
         .progress-bar-fill {
           height: 100%;
           width: 0%;
-          background: linear-gradient(
-            90deg,
-            #00ffee,
-            #00aaff,
-            #00ffee
-          );
+          background: linear-gradient(90deg, #00ffee, #00aaff, #00ffee);
           border-radius: 12px 0 0 12px;
           animation: fillProgress 15s linear forwards;
           position: relative;
           overflow: hidden;
         }
 
-        /* Shimmer effect */
         .progress-bar-fill::before {
           content: "";
           position: absolute;
@@ -111,6 +109,7 @@
       `;
       document.head.appendChild(style);
 
+      // Create preloader element
       const preloader = document.createElement("div");
       preloader.id = "preloader";
       preloader.innerHTML = `
@@ -123,20 +122,28 @@
       `;
       document.body.appendChild(preloader);
 
+      // After 15 seconds, fade out preloader and show content
       setTimeout(() => {
         preloader.classList.add("fade-out");
         setTimeout(() => {
           preloader.remove();
+          // Show page content now
+          const content = document.getElementById("page-content");
+          if (content) {
+            content.style.display = "block";
+          }
+          // Restore scrolling
           document.body.style.overflow = "auto";
         }, 1000);
-      }, 15000); // 15 seconds duration
+      }, 15000);
     });
   </script>
 </head>
 <body>
-  <div style="text-align: center; padding-top: 50vh;">
-    <h1>Welcome to the Site</h1>
-    <p>This page shows a full screen GIF preloader without background.</p>
+  <!-- Your entire page content hidden initially -->
+  <div id="page-content">
+    <h1 style="text-align:center; margin-top:50vh;">Welcome to the Site</h1>
+    <p style="text-align:center;">This content is hidden until the preloader finishes.</p>
   </div>
 </body>
 </html>
