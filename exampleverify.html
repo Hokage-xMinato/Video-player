@@ -1,0 +1,38 @@
+<html><head><!-- Cloudflare Turnstile Script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head><body><!-- Turnstile Verification Box -->
+<div id="cf-gate" style="padding: 2rem; background: #f9f9f9; border-radius: 10px; text-align: center; max-width: 400px; margin: 0 auto;">
+  <h2>👋 Quick Check</h2>
+  <p>Please verify you're human to continue</p>
+  <div class="cf-turnstile"
+       data-sitekey="0x4AAAAAABlOYoiF237N67ZG"
+       data-callback="onVerified"
+       data-theme="light">
+  </div>
+</div>
+
+<!-- Main Protected Content -->
+<div id="protected-content" style="display: none;">
+  <h2>🎉 Verified!</h2>
+  <p>Welcome to the protected content! 🎈</p>
+</div>
+<script>
+  async function onVerified(token) {
+    // Optional: show loading spinner here
+    const res = await fetch("/.netlify/functions/verify-turnstile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ "cf-turnstile-response": token })
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      document.getElementById("cf-gate").style.display = "none";
+      document.getElementById("protected-content").style.display = "block";
+    } else {
+      alert("❌ Verification failed. Please refresh and try again.");
+    }
+  }
+</script>
+</body></html>
